@@ -90,7 +90,7 @@ export default function Register() {
 
             <Button
               type="submit"
-              disabled={loading}
+              isDisabled={loading}
               className="w-full bg-green-500 hover:bg-green-400 text-black font-semibold disabled:opacity-60"
             >
               {loading ? 'Creating account...' : 'Sign up'}
