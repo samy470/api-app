@@ -30,15 +30,15 @@ export default function Navbar({ search, setSearch, isLoggedIn, setIsLoggedIn, u
         <span className="text-lg font-semibold">CryptoTracker</span>
       </Link>
 
-      <input
+      <div className="flex items-center gap-3">
+        <input
           type="text"
           placeholder="Search coins..."
           className="bg-gray-800 text-white px-4 py-2 rounded-lg outline-none focus:ring-2 focus:ring-green-500 w-full md:w-64 order-3 md:order-none"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-
-      <div className="flex items-center gap-3">
+        
         {isLoggedIn ? (
           <div className="relative">
             <button
