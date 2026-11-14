@@ -16,6 +16,7 @@ export default function CoinTable({ search }: { search: string }) {
     const [coins, setCoins] = useState<Coin[]>([])
     const [amount, setAmount] = useState<{ [key: string]: string }>({})
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(true)
     const filteredData = coins.filter(coin => coin.name.toLowerCase().includes(search.toLowerCase()))
 
     useEffect(() => {
@@ -26,6 +27,7 @@ export default function CoinTable({ search }: { search: string }) {
                 setCoins(data)
             })
             .catch(() => setError('Could not load prices, try again in a minute'))
+            .finally(() => setLoading(false))
     }, [])
 
     async function trade(type: 'buy' | 'sell', coin: Coin) {
@@ -58,6 +60,10 @@ export default function CoinTable({ search }: { search: string }) {
         }
     }
 
+    if (loading) {
+        return <p className="px-6 py-8 text-gray-400 text-center">Loading prices...</p>
+    }
+    
     if (error) {
         return <p className="px-6 py-8 text-red-400">{error}</p>
     }
@@ -67,11 +73,11 @@ export default function CoinTable({ search }: { search: string }) {
             <table className="w-full text-sm text-left text-gray-300">
                 <thead className="text-xs uppercase bg-gray-800 text-gray-400">
                     <tr>
-                        <th className="px-6 py-3">Rank</th>
+                        <th className="hidden md:table-cell px-6 py-3">Rank</th>
                         <th className="px-6 py-3">Name</th>
-                        <th className="px-6 py-3">Symbol</th>
+                        <th className="hidden md:table-cell px-6 py-3">Symbol</th>
                         <th className="px-6 py-3">Price (USD)</th>
-                        <th className="px-6 py-3">Market Cap</th>
+                        <th className="hidden md:table-cell px-6 py-3">Market Cap</th>
                         <th className="px-6 py-3">24h %</th>
                         <th className="px-6 py-3">Amount</th>
                         <th className="px-6 py-3">Action</th>
@@ -80,11 +86,11 @@ export default function CoinTable({ search }: { search: string }) {
                 <tbody>
                     {filteredData.map(coin => (
                         <tr key={coin.id} className="border-b border-gray-700 bg-gray-900 hover:bg-gray-950 transition">
-                            <td className="px-6 py-4">{coin.market_cap_rank}</td>
+                            <td className="hidden md:table-cell px-6 py-4">{coin.market_cap_rank}</td>
                             <td className="px-6 py-4 font-medium text-white">{coin.name}</td>
-                            <td className="px-6 py-4 uppercase">{coin.symbol}</td>
+                            <td className="hidden md:table-cell px-6 py-4 uppercase">{coin.symbol}</td>
                             <td className="px-6 py-4">${coin.current_price.toLocaleString()}</td>
-                            <td className="px-6 py-4">${coin.market_cap.toLocaleString()}</td>
+                            <td className="hidden md:table-cell px-6 py-4">${coin.market_cap.toLocaleString()}</td>
                             <td className={`px-6 py-4 ${coin.price_change_percentage_24h > 0 ? 'text-green-400' : 'text-red-400'}`}>
                                 {coin.price_change_percentage_24h?.toFixed(2)}%
                             </td>
