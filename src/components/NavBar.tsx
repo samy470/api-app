@@ -24,21 +24,21 @@ export default function Navbar({ search, setSearch, isLoggedIn, setIsLoggedIn, u
   }
 
   return (
-    <nav className="bg-[#0d1421] text-white px-8 py-4 flex items-center justify-between border-b border-gray-800">
+    <nav className="flex-wrap gap-3 bg-[#0d1421] text-white px-4 md:px-8 py-4 flex items-center justify-between border-b border-gray-800">
       <Link to="/" className="flex items-center gap-2">
         <span className="text-green-400 text-2xl font-bold">🦎</span>
         <span className="text-lg font-semibold">CryptoTracker</span>
       </Link>
 
-      <div className="flex items-center gap-3">
-        <input
+      <input
           type="text"
           placeholder="Search coins..."
-          className="bg-gray-800 text-white px-4 py-2 rounded-lg outline-none focus:ring-2 focus:ring-green-500 w-64"
+          className="bg-gray-800 text-white px-4 py-2 rounded-lg outline-none focus:ring-2 focus:ring-green-500 w-full md:w-64 order-3 md:order-none"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
 
+      <div className="flex items-center gap-3">
         {isLoggedIn ? (
           <div className="relative">
             <button
